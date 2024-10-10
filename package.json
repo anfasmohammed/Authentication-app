@@ -1,0 +1,26 @@
+{
+  "name": "01authentication_app",
+  "version": "1.0.0",
+  "description": "backend for authentication app",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "Express",
+    "MongoDB",
+    "mongoos",
+    "nodemon",
+    "reactjs"
+  ],
+  "author": "mohammed anfas k",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "express": "^4.21.1",
+    "mongoose": "^8.7.1",
+    "nodemon": "^3.1.7"
+  }
+}
