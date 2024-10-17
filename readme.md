@@ -12,3 +12,5 @@ IIFE:Immediately Invoked Function Expression
 300-399 => redirectional message
 400-499 => client side error
 500-599 => Server side error
+
+MVC (model view controllers)Architecture
