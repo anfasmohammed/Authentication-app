@@ -67,7 +67,7 @@ export const login=async(req,res)=>{
         const{email,password}=req.body
 
         //validate
-        if (!email||!password){
+        if (!email || !password){
             return res.status(400).json({
                 success:false,
                 message:"Invalid email or password"
@@ -75,7 +75,7 @@ export const login=async(req,res)=>{
         }
 
         //check if the user exist in the data base
-        const user=await User.findOne({email}).select("+password")
+        const user= await User.findOne({email}).select("+password")
 
         //if the user dosn't exist send response
         if (!user){
@@ -103,7 +103,7 @@ export const login=async(req,res)=>{
 
         //send sucess response
         res.status(200).json({
-            seccess:true,
+            success:true,
             message:"seccessfully logged in",
             user:{
                 id:user._id,
@@ -127,4 +127,24 @@ export const login=async(req,res)=>{
     }
 }
 
-
+//logout
+export const logout=async(req,res)=>{
+    try {
+       res.cookie("tokan",null,{expires:new Date(Date.now()),
+        httpOnly:true
+       }) 
+       res.status(200).json({
+        success:true,
+        message:"Seccessfully logged out"
+       })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success:false,
+            message:`Error in logout ${error}`,
+            error
+        })
+        
+        
+    }
+}
