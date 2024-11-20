@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+product update and delete
+collection price tagination
+search filter and single product
+collection page filter
+shopping cart
+manage usable file
+payment gate way
+user order list 
+admin manage orders
+final touch

@@ -3,7 +3,9 @@ import cors from "cors"
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import authRoutes from "./routes/authRoutes.js";
+import collectionRoutes from "./routes/collectionRoutes.js";
 import crypto from "crypto"
+import productRoutes from "./routes/productRoutes.js";
 
 const app=express()
 
@@ -15,7 +17,8 @@ app.use(morgan("dev")) // logs requestes errors and more to the console
 
 //routes
 app.use("/api/v1/auth",authRoutes)
-
+app.use("/api/v1/collection",collectionRoutes)
+app.use("/api/v1/product",productRoutes)
 //secret key generation
 /*
 const key=crypto.randomBytes(64).toString("hex")

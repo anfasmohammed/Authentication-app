@@ -148,3 +148,7 @@ export const logout=async(req,res)=>{
         
     }
 }
+ //test controller
+ export const textController=(req,res)=>{
+    res.send("protected Route")
+ }

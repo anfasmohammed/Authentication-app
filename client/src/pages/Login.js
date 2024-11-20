@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState,useContext } from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 import AuthContext from '../components/context/authContext'
 
 
@@ -9,6 +9,7 @@ const Login = () => {
   const[password,setPassword]=useState("")
   const {auth,setAuth}=useContext(AuthContext)
   const navigate = useNavigate()
+  const location = useLocation()
  
 
 
@@ -24,7 +25,7 @@ const Login = () => {
         token:data.token
       })
       localStorage.setItem("auth",JSON.stringify(data))
-      navigate("/")
+      navigate(location.state||"/")
      }
       
     }catch(error){
