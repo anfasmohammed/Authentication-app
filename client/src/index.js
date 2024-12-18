@@ -5,6 +5,7 @@ import App from './App';
 
 import { AuthContextProvider } from './components/context/authContext';
 import { BrowserRouter } from 'react-router-dom';
+import "slick-carousel/slick/slick.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

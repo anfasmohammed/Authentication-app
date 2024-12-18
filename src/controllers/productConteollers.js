@@ -1,6 +1,7 @@
 import fs from "fs"
 import slugify from "slugify";
 import Product from "../models/productSchema.js"
+import User from "../models/userSchema.js";
 
 export const createProduct=async(req,res)=>{
 try {
@@ -174,6 +175,68 @@ export const updateProduct=async(req,res)=>{
         res.status(500).json({
             success:false,
             message:"Error while updating data",
+            error
+        })
+    }
+}
+
+//filter product
+
+export const filterProduct=async(req,res)=>{
+    try {
+        const {checked,radio}=req.body
+        let args={}
+        if(checked.length>0)args.collection=checked
+        if(radio.length) args.price={ $gte:radio[0],$lte:radio[1]}
+        const products=await Product.find(args)
+        res.status(200).json({
+            success:true,
+            products
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            success:false,
+            message:"Error while filtering",
+            error
+        })
+        }
+}
+
+// product count
+export const productCount = async (req,res)=>{
+    try {
+        const totalProducts = await Product.find({}).estimatedDocumentCount()
+        res.status(200).json({
+            seccess:true,
+            totalProducts
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(200).json({
+            success:false,
+            message:"Error in product count",
+            error
+        })
+    }
+} 
+
+// product list base on page
+export const productList = async (req,res)=>{
+    try {
+        const perPage=2
+        const page = req.params.page ? req.params.page:1
+        const products= await Product.find({}).select("-photo").skip((page-1)*perPage).limit(perPage).sort({createdAt:-1})
+        res.status(200).send({
+            success:true,
+            products
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success:false,
+            message:"Error in per page ctrl",
             error
         })
     }

@@ -47,9 +47,9 @@ const Navbar = () => {
                
                {openMenu?
                    <div className=' cursor-pointer flex flex-col absolute bg-slate-600 pb-1 '>
-                    <p className=' border-y border-zinc-500 px-1 hover:text-gray-400'>Orders</p>
-                    <p className='px-1 hover:text-gray-400'>Profile</p>
-                    <Link to={`/dashboard/${auth.user.role==="USER"?"user":"admin"}`}>dashboard</Link>
+                    <p className=' border-y border-zinc-500 px-1 hover:text-gray-400'><NavLink to={"dashboard/user/orders"}>Orders</NavLink></p>
+                    <p className='border-y border-zinc-500 px-1 hover:text-gray-400'><NavLink to={"dashboard/user/profile"}>Profile</NavLink></p>
+                    <Link className='px-1 hover:text-gray-400' to={`/dashboard/${auth.user.role==="USER"?"user":"admin"}`}>Dashboard</Link>
                    </div>
                 :" "}
                </div>
