@@ -2,6 +2,7 @@ import fs from "fs"
 import slugify from "slugify";
 import Product from "../models/productSchema.js"
 import User from "../models/userSchema.js";
+import { log } from "console";
 
 export const createProduct=async(req,res)=>{
 try {
@@ -225,7 +226,7 @@ export const productCount = async (req,res)=>{
 // product list base on page
 export const productList = async (req,res)=>{
     try {
-        const perPage=2
+        const perPage=3
         const page = req.params.page ? req.params.page:1
         const products= await Product.find({}).select("-photo").skip((page-1)*perPage).limit(perPage).sort({createdAt:-1})
         res.status(200).send({
@@ -237,6 +238,57 @@ export const productList = async (req,res)=>{
         res.status(400).send({
             success:false,
             message:"Error in per page ctrl",
+            error
+        })
+    }
+}
+
+//search product
+
+export const searchProduct=async (req,res)=>{
+    try {
+        //grab the keyword from url
+        const {keyword}=req.params
+        //find the keyword from the name or description of the product.
+        //if the keyword is present either in name or description we will display it.
+        //the 'option' value "i"the case insensitive
+        const results = await Product.find({
+            $or:[
+                {name: { $regex: keyword, $options: "i" }},
+                {description: {$regex: keyword, $options: "i" }},
+            ],
+        })
+        .select("-photo");
+        res.json(results)
+        
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({
+            success:false,
+            message:"Error in search product API",
+            error
+        })
+    }
+}
+
+//related products
+export const relatedProducts=async(req,res)=>{
+    try {
+        const{pid,cid}=req.params
+        const product=await Product.find({
+            collection:cid,
+            //to remove the item thet id already selected,we will use 'ne' function(for not to include)
+            _id:{$ne}
+        }).select("-photo").link(3).populate("collection")
+        res.status(200).json({
+            success:true,
+            pro
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success:false,
+            message:`Error in getting related products`,
             error
         })
     }

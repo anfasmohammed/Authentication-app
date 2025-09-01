@@ -2,6 +2,8 @@ import app from "./src/app.js";
 import colors from "colors"
 import config from "./src/config/config.js";
 import mongoose from "mongoose";
+
+
 (async(req,res)=>{
     try{
         await mongoose.connect(config.MONGODB_URL)

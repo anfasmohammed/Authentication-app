@@ -1,17 +1,20 @@
 import MenuIcon from '@mui/icons-material/Menu'
-import React, { useContext, useState } from 'react'
+import  { useContext, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import AuthContext from './context/authContext.js'
 import axios from 'axios'
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Search, ShoppingCart } from '@mui/icons-material'
 
 
 const Navbar = () => {
   const [Navbar,setNavbar]=useState(false)
   const [openMenu,setOpenMenu]=useState(false)
+
   const{auth,setAuth}=useContext(AuthContext)
   const navigate=useNavigate()
+  
 
   const handleLogout=async()=>{
   try {
@@ -34,38 +37,59 @@ const Navbar = () => {
   }
 
   return (
-    <div className='flex justify-between items-center h-20 px-2 bg-slate-600'>
-        <div className='text-2xl font-bold hover:text-gray-400'>LOGO</div>
-        
-        <div className=' flex items-center  gap-4 font-bold'>
-        <div className={` md:static  flex flex-col md:flex-row md:gap-4 absolute duration-300 ${Navbar?"bg-slate-600 py-2 top-[80px] right-0 border-t border-zinc-500":"top-[80px] right-[-75px]"}`} >
-        <div className={`hover:text-gray-400 ${Navbar?"border-b border-zinc-500 px-2":""}`}><NavLink to={"/"}>Home</NavLink></div>
-          {auth.user?
-          <ul className='flex flex-col md:flex-row md:gap-4 font-bold'>
-               <div onClick={()=>{setOpenMenu(!openMenu)}}>
-               <li className={`cursor-pointer hover:text-gray-400 ${Navbar?"border-b border-zinc-500 px-2":""}`}  >{auth.user.role}<ArrowDropDownIcon/></li>
-               
-               {openMenu?
-                   <div className=' cursor-pointer flex flex-col absolute bg-slate-600 pb-1 '>
-                    <p className=' border-y border-zinc-500 px-1 hover:text-gray-400'><NavLink to={"dashboard/user/orders"}>Orders</NavLink></p>
-                    <p className='border-y border-zinc-500 px-1 hover:text-gray-400'><NavLink to={"dashboard/user/profile"}>Profile</NavLink></p>
-                    <Link className='px-1 hover:text-gray-400' to={`/dashboard/${auth.user.role==="USER"?"user":"admin"}`}>Dashboard</Link>
-                   </div>
-                :" "}
-               </div>
-                
-                <li className={`hover:text-gray-400 ${Navbar?"border-b border-zinc-500 px-2":""}`}><NavLink to={"/collection"}>Collection</NavLink></li>
-                <li className={`hover:text-gray-400 ${Navbar?"px-2":""}`} onClick={handleLogout}><NavLink>Logout</NavLink></li>
-                </ul>
-                :
-            <ul className='flex flex-col md:flex-row md:gap-4 font-bold'>
-                <li className={`hover:text-gray-400 ${Navbar?"border-b border-zinc-500 px-2":""}`}><NavLink to={"/login"}>Login</NavLink></li>
-                <li className={`hover:text-gray-400 ${Navbar?"px-2":""}`}><NavLink to={"/signup"}>SignUP</NavLink></li>
+    <div className=' flex justify-between items-center px-6 bg-white shadow-md py-4 '>
+        <div className='flex items-center'>
+          <h1 className='text-xl font-bold text-slate-900'>StyleShop</h1>
+          </div>
+        <div className='hidden md:flex space-x-6 ml-10'>
+          
+            {auth.user?
+            <ul className='flex gap-3 font-bold'>
+            <li>Orders</li>
+            <li>Profile</li>
+            <li>Dashboard <span><ArrowDropDownIcon/></span></li>
+            <li>Collection</li>
+            <li onClick={handleLogout}>LogOut</li>
             </ul>
-          }
+            :
+            <ul className='flex gap-3 font-bold'>
+            <NavLink to={"/login"}><li className='hover:text-blue-500'>Login</li></NavLink>
+            <Link to={"/signUp"}><li className='hover:text-blue-500'>SignUp</li></Link>
+          </ul>}
         </div>
-          <div className='flex md:hidden' onClick={()=>{setNavbar(open=>!open)}}>{Navbar?<CloseIcon/> :<MenuIcon/>}</div>
+        <div className='flex items-center space-x-4'>
+          <button className='p-2 rounded-full hover:bg-gray-100'>
+            <Search/>
+          </button>
+          <button className='relative p-2 rounded-full hover:bg-gray-100'>
+            <ShoppingCart/>
+            <span className='absolute -top-1 -right-2 bg-blue-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs'>3</span>
+          </button>
         </div>
+        <div onClick={()=>setOpenMenu(open=>!open)} className=' block md:hidden'>{openMenu?<CloseIcon/>:<MenuIcon/>}
+        {openMenu?
+        <div>{auth.user?
+          <ul className='absolute top-16 right-0 z-10 flex-col gap-8 font-bold bg-base-300 w-48 rounded'>
+            <li className='border-b border-base-100 py-2 px-2 hover:bg-secondary-content/10'>Orders</li>
+            <li className='border-b border-base-100 py-2 px-2 hover:bg-secondary-content/10'>Profile</li>
+            <li className='border-b border-base-100 py-2 px-2 hover:bg-secondary-content/10'>Dashboard</li>
+            <li className='border-b border-base-100 py-2 px-2 hover:bg-secondary-content/10'>Collection</li>
+            <li className='py-2 px-2 hover:bg-secondary-content/10'>LogPut</li>
+            </ul>
+            :
+            <ul className='absolute top-16 right-0 z-10 flex-col gap-8 font-bold bg-base-300 w-48 rounded'>
+            <li className='border-b border-base-100 py-2 px-2 hover:bg-secondary-content/10'>LogIn</li>
+            <li className='py-2 px-2 hover:bg-secondary-content/10'>SignIn</li>
+            </ul>
+             }
+            </div>
+        
+          
+          
+        :
+        <div></div>
+      }
+      </div>
     </div>
   )
 }

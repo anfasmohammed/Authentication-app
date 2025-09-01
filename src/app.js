@@ -10,7 +10,7 @@ import productRoutes from "./routes/productRoutes.js";
 const app=express()
 
 // middlewares
-app.use(cors())// allows to interact whit client which is loaded in different domain.
+app.use(cors())// allows to interact with client which is loaded in different domain.
 app.use(express.json())// instructing the app to accept data in the json format.
 app.use(cookieParser()) // it allows the server to access the use cookies
 app.use(morgan("dev")) // logs requestes errors and more to the console

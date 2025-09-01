@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, { useState,useContext } from 'react'
-import {useLocation, useNavigate} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 import AuthContext from '../components/context/authContext'
+import { ArrowBack } from '@mui/icons-material'
 
 
 const Login = () => {
@@ -36,29 +37,39 @@ const Login = () => {
 
   
   return (
-    <div className='bg-zinc-500 flex flex-col items-center'>
-      <h1 className='text-2xl pt-5 font-semibold'>Login</h1>
-      <form onSubmit={handleSubmit} >
-      <div className='flex flex-col gap-6  items-center py-5 '>
-      <input 
-      onChange={(e)=>setEmail(e.target.value)} 
-      type="email" 
-      placeholder='Email' 
-      value={email} 
-      name={email} 
-      required
-      className=' border border-black px-5 py-1 rounded-md w-[300px]' />
-        <input 
-        onChange={(e)=>setPassword(e.target.value)} 
-        type="password" 
-        placeholder='Password' 
-        value={password} 
-        name={password} 
-        required
-        className=' border border-black px-5 py-1 rounded-md w-[300px]'/>
-        <button className='bg-gray-400 hover:text-zinc-200 font-mono w-16 p-1 rounded' type='submit'>Login</button>
+    <div className=" min-h-screen bg-primary-content/15">
+      <div className='container mx-auto px-4 py-8'>
+        <div className='max-w-2xl mx-auto'>
+          <Link to={"/"} className='btn btn-ghost mb-6 text-lg'>
+          <ArrowBack className='size-5'/>Back</Link>
+          <div className='card bg-primary-content/25'>
+          <div className='card-body'>
+            <h2 className='card-title text-2xl mb-4'>Login</h2>
+            <form onSubmit={handleSubmit}>
+              <div className='form-control mb-4'>
+                <input type="text"
+                placeholder='Email'
+                className='input input-bordered' 
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}/>
+              </div>
+              <div className='form-control mb-4'>
+                <input type="text"
+                placeholder='Password'
+                className='input input-bordered' 
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}/>
+              </div>
+              <div className='card-actions justify-center'>
+                <button type='submit' className='btn btn-primary'>
+                  Login
+                </button>
+              </div>
+            </form>
+          </div>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   )
 }
